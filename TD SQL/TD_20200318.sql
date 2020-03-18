@@ -1,19 +1,24 @@
 create database TP_20200318;
 
-/*TP 1 Comptabiliser le nombre de visiteurs d’un site*/
+/*------------------------------------TP 1 Comptabiliser le nombre de visiteurs d’un site------------------------*/
+
 CREATE TABLE traffic(
 id_utilisateur INT NOT NULL AUTO_INCREMENT,
 IP varchar(45),
-DT_FIRST_Visit DATE,
+DT_FIRST_Visit DATEtime default now(),
 DT_LAST_Visit DATE,
-nb_visit int,
+nb_visit int default +1,
  PRIMARY KEY (id_utilisateur));
+ 
+insert into traffic (IP,DT_LAST_Visit) values ("1.181.168.1","2020-03-11"),("1.181.168.2","2020-03-11"),("1.181.168.1","2020-03-11");
 
-SELECT COUNT(DISTINCT IP) 
-FROM poe.traffic;
+SELECT COUNT(IP) 
+FROM traffic;
+
+select * from traffic;
 
 
-/*TP2 Les relations*/
+/*---------------------------------------------------TP2 Les relations-------------------------------------------*/
 CREATE TABLE pays(
 id_pays INT NOT NULL AUTO_INCREMENT,
 nom_pays varchar(55),
@@ -57,7 +62,7 @@ inner join langue on langue.id_langue = l.id_langue
 where langue.nom_langue="anglais";
 
 
-/*TP3 le blog*/
+/*-----------------------------------------TP3 le blog--------------------------------------------*/
 CREATE TABLE blog_UTLISATEUR(
 UID INT NOT NULL auto_increment,
 utilisateur varchar(55),
@@ -93,7 +98,7 @@ UID int NOT NULL,
 FOREIGN KEY(UID) references blog_UTLISATEUR(UID),
 PRIMARY KEY (tags_id));
 
-/*TD4* E-commmerce*/
+/*-----------------------------------------TD4 E-commmerce--------------------------------------------*/
 CREATE TABLE customer(
 UID INT NOT NULL auto_increment,
 nom varchar(55),
@@ -114,47 +119,6 @@ purchase varchar(150),
 purchase_date date,
 primary key(purchase_id),
 FOREIGN KEY(UID) references customer(UID));
-
-/*TD AUTO Ecole*/
-
-create table eleve(
-eleve_id int not null auto_increment,
-nom varchar(55),
-prénom varchar(55),
-adresse varchar(42),
-date_naissance date,
-primary key(eleve_id));
-
-create table cd_rom(
-id_cd int not null auto_increment,
-num_cd int not null,
-nom_editeur varchar(100),
-primary key(id_cd));
-
-create table question(
-id_question int not null auto_increment,
-num_question int not null,
-intitulé varchar(100),
-reponse varchar(100),
-difficulte int not null,
-theme varchar(50),
-id_cd int not null,
-FOREIGN KEY(UID) references cd_rom(id_cd),
-primary key(id_question));
-
-create table séance(
-seances_id int not null auto_increment,
-dt_séance datetime,
-id_cd int not null,
-FOREIGN KEY(id_cd) references cd_rom(id_cd));
-
-create table reponse(
-id_reponse int not null,
-reponse enum("1","0","0") not null,
-id_question int not null,
-eleve_id int not null,
-FOREIGN KEY(id_question) references question(id_question),
-FOREIGN KEY(eleve_id) references eleve(eleve_id));
 
 
 
