@@ -128,6 +128,7 @@ primary key(eleve_id));
 create table cd_rom(
 id_cd int not null auto_increment,
 num_cd int not null,
+nom_editeur varchar(100),
 primary key(id_cd));
 
 create table question(
@@ -141,19 +142,21 @@ id_cd int not null,
 FOREIGN KEY(UID) references cd_rom(id_cd),
 primary key(id_question));
 
-create table reponse(
-id_reponse int not null,
-reponse varchar(100),
-id_question int not null,
-eleve_id int not null,
-FOREIGN KEY(id_question) references question(id_question),
-FOREIGN KEY(eleve_id) references eleve(eleve_id));
-
 create table séance(
 seances_id int not null auto_increment,
 dt_séance datetime,
 id_cd int not null,
 FOREIGN KEY(id_cd) references cd_rom(id_cd));
+
+create table reponse(
+id_reponse int not null,
+reponse enum("1","0","0") not null,
+id_question int not null,
+eleve_id int not null,
+FOREIGN KEY(id_question) references question(id_question),
+FOREIGN KEY(eleve_id) references eleve(eleve_id));
+
+
 
 
 
